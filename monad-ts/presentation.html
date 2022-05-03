@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="for TS developers" />
+  <title>Some ideas from Functional Programming</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Some ideas from Functional Programming</h1>
+  <p class="author">
+for TS developers
+  </p>
+</div>
+<div id="disclaimer" class="slide section level1">
+<h1>Disclaimer</h1>
+<p>These are just some ideas. Don’t focus too much on the language.</p>
+</div>
+<div id="form-validation" class="slide section level1">
+<h1>Form Validation</h1>
+</div>
+<div id="form-type" class="slide section level1">
+<h1>Form Type</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="bu">FormData</span> <span class="op">=</span> { name<span class="op">:</span> <span class="dt">string</span><span class="op">;</span> email<span class="op">:</span> <span class="dt">string</span><span class="op">;</span> age<span class="op">:</span> <span class="dt">string</span> }<span class="op">;</span></span></code></pre></div>
+<div class="incremental">
+<p>We could just as well have chosen a different representation</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> FormDataAlternativeRepresentation <span class="op">=</span> [<span class="dt">string</span><span class="op">,</span> <span class="dt">string</span><span class="op">,</span> <span class="dt">string</span>]<span class="op">;</span></span></code></pre></div>
+<p>What’s important here is to realize that any datatype that can store
+three values would work.</p>
+<p>A value of type <code>FormData</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> formData<span class="op">:</span> <span class="bu">FormData</span> <span class="op">=</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  name<span class="op">:</span> <span class="st">&quot;sebastian&quot;</span><span class="op">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  email<span class="op">:</span> <span class="st">&quot;email@email.com&quot;</span><span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  age<span class="op">:</span> <span class="st">&quot;27&quot;</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="validated-form-type" class="slide section level1">
+<h1>Validated Form Type</h1>
+<p>Endgoal is to get:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ValidatedForm <span class="op">=</span> { name<span class="op">:</span> Name<span class="op">;</span> email<span class="op">:</span> Email }<span class="op">;</span></span></code></pre></div>
+<div class="incremental">
+<p>Where <code>Name</code> and <code>Email</code> are types that
+encapsulate the business rules for <code>name</code> and
+<code>email</code>.</p>
+<p><code>name</code> should not be null</p>
+<p><code>name</code> should not be too long</p>
+<p>etc</p>
+<p>* Let’s for a moment forget about <code>age</code></p>
+</div>
+</div>
+<div id="validate-form-function" class="slide section level1">
+<h1>Validate Form Function</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ValidateForm <span class="op">=</span> (f<span class="op">:</span> <span class="bu">FormData</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>ValidatedForm<span class="op">&gt;;</span></span></code></pre></div>
+<p>We need a <code>Maybe</code> type because not every
+<code>FormData</code> can be converted into a
+<code>ValidatedForm</code></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Maybe<span class="op">&lt;</span>A<span class="op">&gt;</span> <span class="op">=</span> Nothing <span class="op">|</span> Just<span class="op">&lt;</span>A<span class="op">&gt;;</span></span></code></pre></div>
+<p>What this data type says is that <code>Maybe&lt;A&gt;</code> can be
+<code>Nothing</code> or <code>Just&lt;A&gt;</code>. <code>Just</code> is
+parametrized by another type <code>A</code>.</p>
+<p>We are going to use some utility functions that let us build values
+for those types.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Just<span class="op">&lt;</span>A<span class="op">&gt;</span> <span class="op">=</span> { tag<span class="op">:</span> <span class="st">&quot;Just&quot;</span><span class="op">;</span> value<span class="op">:</span> A }<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> JustConstructor <span class="op">=</span> <span class="op">&lt;</span>A<span class="op">&gt;</span>(a<span class="op">:</span> A) <span class="kw">=&gt;</span> Just<span class="op">&lt;</span>A<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Just<span class="op">:</span> JustConstructor <span class="op">=</span> (a) <span class="kw">=&gt;</span> ({ tag<span class="op">:</span> <span class="st">&quot;Just&quot;</span><span class="op">,</span> value<span class="op">:</span> a })<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Nothing <span class="op">=</span> { tag<span class="op">:</span> <span class="st">&quot;Nothing&quot;</span> }<span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> NothingConstructor <span class="op">=</span> () <span class="kw">=&gt;</span> Nothing<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Nothing<span class="op">:</span> NothingConstructor <span class="op">=</span> () <span class="kw">=&gt;</span> ({ tag<span class="op">:</span> <span class="st">&quot;Nothing&quot;</span> })<span class="op">;</span></span></code></pre></div>
+<p>* We need the <code>tag</code> field so that we can switch at the
+value level.</p>
+</div>
+</div>
+<div id="lets-go-back-to-the-name-type" class="slide section level1">
+<h1>Let’s go back to the Name type</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Name <span class="op">=</span> { tag<span class="op">:</span> <span class="st">&quot;Name&quot;</span><span class="op">;</span> value<span class="op">:</span> <span class="dt">string</span> }<span class="op">;</span></span></code></pre></div>
+<p><code>Name</code> type just wraps a <code>string</code></p>
+<p>But in order to construct it from a <code>string</code> we will check
+it complies with some business rules</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> NameConstructor <span class="op">=</span> (n<span class="op">:</span> <span class="dt">string</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>Name<span class="op">&gt;;</span></span></code></pre></div>
+<p>That’s why we return a <code>Maybe&lt;Name&gt;</code></p>
+<p>And here’s a basic implementation</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> name<span class="op">:</span> NameConstructor <span class="op">=</span> (n<span class="op">:</span> <span class="dt">string</span>) <span class="kw">=&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  n<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span> <span class="op">?</span> <span class="fu">Nothing</span>() <span class="op">:</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  n<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">20</span> <span class="op">?</span> <span class="fu">Nothing</span>() <span class="op">:</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Just</span>({ tag<span class="op">:</span> <span class="st">&quot;Name&quot;</span><span class="op">,</span> value<span class="op">:</span> n })<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="we-can-do-the-same-thing-for-email-type"
+class="slide section level1">
+<h1>We can do the same thing for Email type</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Email <span class="op">=</span> { tag<span class="op">:</span> <span class="st">&quot;Email&quot;</span><span class="op">;</span> email<span class="op">:</span> <span class="dt">string</span> }<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> EmailConstructor <span class="op">=</span> (e<span class="op">:</span> <span class="dt">string</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>Email<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> email<span class="op">:</span> EmailConstructor <span class="op">=</span> (email<span class="op">:</span> <span class="dt">string</span>) <span class="kw">=&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Just</span>({ tag<span class="op">:</span> <span class="st">&quot;Email&quot;</span><span class="op">,</span> email })<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="attempt-i" class="slide section level1">
+<h1>Attempt I</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ValidateForm <span class="op">=</span> (f<span class="op">:</span> <span class="bu">FormData</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>ValidatedForm<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> validateForm<span class="op">:</span> ValidateForm <span class="op">=</span> (f) <span class="kw">=&gt;</span> {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> maybeName <span class="op">=</span> <span class="fu">name</span>(f<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span> (maybeName<span class="op">.</span><span class="at">tag</span>) {</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;Nothing&quot;</span><span class="op">:</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="fu">Nothing</span>()<span class="op">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;Just&quot;</span><span class="op">:</span> {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> maybeEmail <span class="op">=</span> <span class="fu">email</span>(f<span class="op">.</span><span class="at">email</span>)<span class="op">;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">switch</span> (maybeEmail<span class="op">.</span><span class="at">tag</span>) {</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="st">&quot;Nothing&quot;</span><span class="op">:</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> <span class="fu">Nothing</span>()<span class="op">;</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="st">&quot;Just&quot;</span><span class="op">:</span> {</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> <span class="fu">Just</span>({ name<span class="op">:</span> maybeName<span class="op">.</span><span class="at">value</span><span class="op">,</span> email<span class="op">:</span> maybeEmail<span class="op">.</span><span class="at">value</span> })<span class="op">;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="lets-get-rid-of-switch" class="slide section level1">
+<h1>Let’s get rid of <code>switch</code></h1>
+<div class="incremental">
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> MatchMaybe <span class="op">=</span> <span class="op">&lt;</span>A<span class="op">,</span> C<span class="op">&gt;</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  m<span class="op">:</span> Maybe<span class="op">&lt;</span>A<span class="op">&gt;,</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  matcher<span class="op">:</span> {</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    Just<span class="op">:</span> (a<span class="op">:</span> A) <span class="kw">=&gt;</span> C<span class="op">;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    Nothing<span class="op">:</span> () <span class="kw">=&gt;</span> C<span class="op">;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>) <span class="kw">=&gt;</span> C<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> matchMaybe<span class="op">:</span> MatchMaybe <span class="op">=</span> (m<span class="op">,</span> { Just<span class="op">,</span> Nothing }) <span class="kw">=&gt;</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">switch</span> (m<span class="op">.</span><span class="at">tag</span>) {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;Nothing&quot;</span><span class="op">:</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="fu">Nothing</span>()<span class="op">;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> <span class="st">&quot;Just&quot;</span><span class="op">:</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="fu">Just</span>(m<span class="op">.</span><span class="at">value</span>)<span class="op">;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="attempt-ii" class="slide section level1">
+<h1>Attempt II</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> validateForm2<span class="op">:</span> ValidateForm <span class="op">=</span> (f) <span class="kw">=&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matchMaybe</span>(<span class="fu">name</span>(f<span class="op">.</span><span class="at">name</span>)<span class="op">,</span> {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    Just<span class="op">:</span> (name) <span class="kw">=&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matchMaybe</span>(<span class="fu">email</span>(f<span class="op">.</span><span class="at">email</span>)<span class="op">,</span> {</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        Just<span class="op">:</span> (email) <span class="kw">=&gt;</span> <span class="fu">Just</span>({ name<span class="op">,</span> email }) <span class="im">as</span> Maybe<span class="op">&lt;</span>ValidatedForm<span class="op">&gt;,</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        Nothing<span class="op">,</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    Nothing<span class="op">,</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="lets-get-rid-of-those-nothing" class="slide section level1">
+<h1>Let’s get rid of those <code>Nothing()</code></h1>
+<div class="incremental">
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> BindMaybe <span class="op">=</span> <span class="op">&lt;</span>A<span class="op">,</span> B<span class="op">&gt;</span>(m<span class="op">:</span> Maybe<span class="op">&lt;</span>A<span class="op">&gt;,</span> b<span class="op">:</span> (a<span class="op">:</span> A) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>B<span class="op">&gt;</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>B<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bindMaybe<span class="op">:</span> BindMaybe <span class="op">=</span> (m<span class="op">,</span> fn) <span class="kw">=&gt;</span> <span class="fu">matchMaybe</span>(m<span class="op">,</span> { Just<span class="op">:</span> fn<span class="op">,</span> Nothing })<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="attempt-iii" class="slide section level1">
+<h1>Attempt III</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> validateForm3<span class="op">:</span> ValidateForm <span class="op">=</span> (f) <span class="kw">=&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bindMaybe</span>(<span class="fu">name</span>(f<span class="op">.</span><span class="at">name</span>)<span class="op">,</span> name <span class="kw">=&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bindMaybe</span>(<span class="fu">email</span>(f<span class="op">.</span><span class="at">email</span>)<span class="op">,</span> email <span class="kw">=&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Just</span>({ name<span class="op">,</span> email })</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>))<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="now-lets-add-age-back" class="slide section level1">
+<h1>Now let’s add Age back</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Age <span class="op">=</span> { tag<span class="op">:</span> <span class="st">&quot;Age&quot;</span><span class="op">;</span> age<span class="op">:</span> <span class="dt">number</span> }<span class="op">;</span></span></code></pre></div>
+<p><code>Age</code> type just wraps a <code>number</code></p>
+<p>But in order to construct it from a <code>number</code> we will check
+it complies with some business rules</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> AgeConstructor <span class="op">=</span> (a<span class="op">:</span> <span class="dt">number</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>Age<span class="op">&gt;;</span></span></code></pre></div>
+<p>That’s why we return a <code>Maybe&lt;Age&gt;</code></p>
+<p>And here’s a basic implementation</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> age<span class="op">:</span> AgeConstructor <span class="op">=</span> (age) <span class="kw">=&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  age <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="fu">Nothing</span>() <span class="op">:</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  age <span class="op">&gt;</span> <span class="dv">120</span> <span class="op">?</span> <span class="fu">Nothing</span>() <span class="op">:</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Just</span>({ tag<span class="op">:</span> <span class="st">&quot;Age&quot;</span><span class="op">,</span> age })<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="houston-we-have-problem" class="slide section level1">
+<h1>Houston we have problem!</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="bu">FormData</span> <span class="op">=</span> { name<span class="op">:</span> <span class="dt">string</span><span class="op">;</span> email<span class="op">:</span> <span class="dt">string</span><span class="op">;</span> age<span class="op">:</span> <span class="dt">string</span> }<span class="op">;</span></span></code></pre></div>
+<p><code>age</code> field in <code>FormData</code> is of type
+<code>string</code> because that’s how we get it from the user…</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> IntegerFromString <span class="op">=</span> (s<span class="op">:</span> <span class="dt">string</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span><span class="dt">number</span><span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> integer<span class="op">:</span> IntegerFromString <span class="op">=</span> (s) <span class="kw">=&gt;</span> {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> i <span class="op">=</span> <span class="pp">parseInt</span>(s)<span class="op">;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="pp">isNaN</span>(i) <span class="op">?</span> <span class="fu">Nothing</span>() <span class="op">:</span> <span class="fu">Just</span>(i)<span class="op">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> AgeFromString <span class="op">=</span> (s<span class="op">:</span> <span class="dt">string</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>Age<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ageFromString<span class="op">:</span> AgeFromString <span class="op">=</span> (s) <span class="kw">=&gt;</span> <span class="fu">bindMaybe</span>(<span class="fu">integer</span>(s)<span class="op">,</span> age)<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+<div id="final-version" class="slide section level1">
+<h1>Final version!</h1>
+<div class="incremental">
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> FullValidatedForm <span class="op">=</span> { name<span class="op">:</span> Name<span class="op">;</span> email<span class="op">:</span> Email<span class="op">;</span> age<span class="op">:</span> Age }<span class="op">;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> FullValidateForm <span class="op">=</span> (f<span class="op">:</span> <span class="bu">FormData</span>) <span class="kw">=&gt;</span> Maybe<span class="op">&lt;</span>FullValidatedForm<span class="op">&gt;;</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> fullValidateForm<span class="op">:</span> FullValidateForm <span class="op">=</span> (f) <span class="kw">=&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bindMaybe</span>(<span class="fu">validateForm3</span>(f)<span class="op">,</span> ({ name<span class="op">,</span> email }) <span class="kw">=&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bindMaybe</span>(<span class="fu">ageFromString</span>(f<span class="op">.</span><span class="at">age</span>)<span class="op">,</span> (age) <span class="kw">=&gt;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Just</span>({ name<span class="op">,</span> email<span class="op">,</span> age })</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>))<span class="op">;</span></span></code></pre></div>
+</div>
+</div>
+</body>
+</html>
